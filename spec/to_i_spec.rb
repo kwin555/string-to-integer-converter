@@ -32,7 +32,7 @@ RSpec.describe ToInteger, type: :model do
     end
   end
   describe '.to_integer' do
-    it 'takes a string and converts to integer (positive)' do
+    it 'takes a string and converts to integer (negative)' do
       expect(ToInteger.to_integer('-34242')).to eq (-34_242)
     end
   end
