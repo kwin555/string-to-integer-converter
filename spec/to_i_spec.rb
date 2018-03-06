@@ -6,9 +6,9 @@ RSpec.describe ToInteger, type: :model do
       expect(ToInteger.string_to_char_array('34234')).to eq ['3', '4', '2', '3', '4']
     end
   end
-  describe '.char_to_integer_array' do
+  describe '.char_to_ASCII_value_array' do
     it 'should should convert the array of chars in to an array of integers' do
-      expect(ToInteger.char_to_integer_array(['3', '4', '2', '3', '4'])).to eq [3, 4, 2, 3, 4]
+      expect(ToInteger.char_to_ASCII_value_array(['3', '4', '2', '3', '4'])).to eq [51, 52, 50, 51, 52]
     end
   end
   describe '.array_of_integers_into_integer' do
@@ -33,7 +33,12 @@ RSpec.describe ToInteger, type: :model do
   end
   describe '.to_integer' do
     it 'takes a string and converts to integer (negative)' do
-      expect(ToInteger.to_integer('-34242')).to eq (-34_242)
+      expect(ToInteger.to_integer('-34242')).to eq -34_242
+    end
+  end
+  describe '.to_integer' do
+    it 'removes the decimal places from the string' do
+      expect(ToInteger.to_integer('4242.5')).to eq (4_242)
     end
   end
 end

@@ -1,56 +1,46 @@
 # creates a to integer method that converts a string to an integer
 module ToInteger
   def self.negative?(num_array)
-    num_array.include?(nil)
+    num_array.include?(nil) || num_array.include?(45)
   end
 
   def self.negatve_remover(num_array)
     num_array.delete_if { |num| num == nil }
+    num_array.delete_if { |num| num == 45 }
   end
 
   def self.string_to_char_array(string)
-    string.split('').map do |num|
-      num
+    char_array = string.chars
+    if string.include?('.')
+      char_array = string.split('.')[0].chars
     end
+    char_array
   end
 
   def self.array_of_integers_into_integer(num_array)
-    power = num_array.size - 1
-    i = 0
-    while i <= num_array.size - 1
-      num_array[i] = num_array[i] * 10**power
-      i += 1
-      power -= 1
+    total = 0
+    num_array.reverse.each_with_index do |num, power|
+      total += num * 10**power
     end
-    num_array.reduce(:+)
+    total
   end
 
-  def self.char_to_integer_array(char_array)
-    nums = []
-    map = {
-      '0' => 0,
-      '1' => 1,
-      '2' => 2,
-      '3' => 3,
-      '4' => 4,
-      '5' => 5,
-      '6' => 6,
-      '7' => 7,
-      '8' => 8,
-      '9' => 9
-    }
-    char_array.each do |char|
-      num = map[char]
-      nums << num
+  def self.char_to_ASCII_value_array(char_array)
+    char_array.map(&:ord)
+  end
+
+  def self.ascii_to_integer_array(ascii_value_array)
+    ascii_value_array.map do |value|
+      value - 48
     end
-    nums
   end
 
   def self.to_integer(string_input)
     char_array = string_to_char_array(string_input)
-    num_array = char_to_integer_array(char_array)
-    negative_check = negative?(num_array)
-    negative_check ? negatve_remover(num_array) : num_array
+    ascii_value_array = char_to_ASCII_value_array(char_array)
+    negative_check = negative?(ascii_value_array)
+    negative_check ? negatve_remover(ascii_value_array) : ascii_value_array
+    num_array = ascii_to_integer_array(ascii_value_array)
     integer = array_of_integers_into_integer(num_array)
     negative_check ? integer * - 1 : integer
   end
