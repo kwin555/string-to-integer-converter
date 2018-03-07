@@ -5,14 +5,15 @@ module ToInteger
   end
 
   def self.negatve_remover(num_array)
-    num_array.delete_if { |num| num == nil }
+    num_array.delete_if(&:nil?)
     num_array.delete_if { |num| num == 45 }
   end
 
   def self.string_to_char_array(string)
-    char_array = string.chars
     if string.include?('.')
       char_array = string.split('.')[0].chars
+    else
+      char_array = string.chars
     end
     char_array
   end
@@ -25,7 +26,7 @@ module ToInteger
     total
   end
 
-  def self.char_to_ASCII_value_array(char_array)
+  def self.char_to_ascii_value_array(char_array)
     char_array.map(&:ord)
   end
 
@@ -37,7 +38,7 @@ module ToInteger
 
   def self.to_integer(string_input)
     char_array = string_to_char_array(string_input)
-    ascii_value_array = char_to_ASCII_value_array(char_array)
+    ascii_value_array = char_to_ascii_value_array(char_array)
     negative_check = negative?(ascii_value_array)
     negative_check ? negatve_remover(ascii_value_array) : ascii_value_array
     num_array = ascii_to_integer_array(ascii_value_array)
